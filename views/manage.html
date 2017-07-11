@@ -10,7 +10,33 @@
         <div class="btn btn-one">
             改变1号屏幕
         </div>
+        <div >
+            项目名称：<input type="text" id="event" name="event"/>
+            类型：<input type="text" id="type" name="type" />
+            内容：<input type="text" id="substance" name="substance" />
+            <input type="button" id="submit" value="增加" />
+        </div>
+        <div>
+        <span>选取屏幕</span>
+
+            屏号：<select name="num" id="num">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="all">all</option>
+            </select>
+            内容：<input type="text" id="con" name="con" />
+            <input type="button" id="gai" value="改屏">
+        </div>
     </div>
+    <a href="/check">查看已有信息</a>
 </body>
 
 <script src="javascripts/jquery.min.js"></script>
@@ -18,7 +44,6 @@
     $(document).ready(function () {
 
         $('.btn-one').on('click', function () {
-
             $.ajax({
                 url: '/manage/change',
                 type: 'post',
@@ -29,10 +54,34 @@
                     console.log(res)
                 }
             });
-
         });
-
+        $('#submit').on('click',function(){
+            $.ajax({
+                url: '/manage/sub',
+                type:'post',
+                data:{
+                    event:$('#event').val(),
+                    type:$('#type').val(),
+                    content:$('#substance').val()
+                },
+                success:function(res){
+                    console.log(res)
+                }
+            });
+        });
+        $('#gai').on('click',function(){
+            $.ajax({
+                url:'/manage',
+                type:'post',
+                data:{
+                    num:$('#num').val(),
+                    content:$('#con').val()
+                },
+                success:function(res){
+                    console.log(res)
+                }
+            });
+        });
     });
 </script>
-
 </html>

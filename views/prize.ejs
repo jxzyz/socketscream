@@ -1,0 +1,8 @@
+<%
+    for(var i=0;i<prize.length;i++)
+    {
+        %>
+            <a href='/person?year=<%=year%>&item=<%= item%>&prize=<%= prize[i].detail%>'><%= prize[i].detail%></a>
+        <%
+    }
+%>
