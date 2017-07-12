@@ -219,25 +219,306 @@ app.get('/person',function(req,res){
     var year = req.query.year;
     var item = req.query.item;
     var detail = req.query.prize;
+    var time;//需要轮转的次数
+    var residual;//除10以后剩余的次数
     db.FindPerson(year,item,detail,function(dat){
         result = dat;
         console.log(result);
         res.render('person',{
             person:result
         });
-            for(var i=1;i<11;i++)
+
+        db.CountNum(year,item,detail,function(data){
+            console.log(data);
+            if(data[0].num<=10){//小于10的简单策略
+                if(data[0].num==1)//等于1的策略，把1个人放到10个屏幕上
                 {
-                    if(screenArr[i])
-                    {
-                        console.log(i);
-                        screenArr[i].send(result[0]);
+                    for(var i=1;i<11;i++)
+                   {
+                        if(screenArr[i])
+                        {
+                           console.log(i);
+                            screenArr[i].send(result[0]);
+                        }
+                        else
+                           console.log('第'+i+'屏未启动');
                     }
-                    else
-                        console.log('第'+i+'屏未启动');
+                }else if(data[0].num==2)//等于2的策略，前五个屏幕显示一个人后五个屏幕显示一个人
+                {
+                    for(var i=1;i<11;i++)
+                   {
+                    if(i<=5){
+                        if(screenArr[i])
+                        {
+                           console.log(i);
+                            screenArr[i].send(result[0]);
+                        }
+                        else
+                           console.log('第'+i+'屏未启动');
+                        }
+                        else{
+                             if(screenArr[i])
+                        {
+                           console.log(i);
+                            screenArr[i].send(result[1]);
+                        }
+                        else
+                           console.log('第'+i+'屏未启动');
+                        }
+
+                        }
+                    }else if(data[0].num==3){//等于3的策略
+                        for(var i=1;i<11;i++)
+                        {
+                            if(i<=3)
+                            {
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[0]);
+                                }
+                                else
+                                console.log('第'+i+'屏未启动');
+                            }
+                            else if(i<=6)
+                            {
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[1]);
+                                }
+                                else
+                                console.log('第'+i+'屏未启动');
+                            }
+                            else{
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[2]);
+                                }
+                                else
+                                console.log('第'+i+'屏未启动');
+                            }
+                        }
+                    }else if(data[0].num==4)//4的策略 2233
+                    {
+                        for(var i=1;i<11;i++)
+                        {
+                            if(i<=2)
+                            {
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[0]);
+                                }
+                                else
+                                console.log('第'+i+'屏未启动');
+                            }else if(i<=4){
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[1]);
+                                }
+                                else
+                                console.log('第'+i+'屏未启动');
+                            }else if(i<=7){
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[2]);
+                                }
+                                else
+                                console.log('第'+i+'屏未启动');
+                            }else{
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[3]);
+                                }
+                                else
+                                console.log('第'+i+'屏未启动');
+                            }
+                        }
+                    }else if(data[0].num==5)//5的策略 22222
+                    {
+                        for(var i=1;i<11;i++)
+                        {
+                            if(screenArr[i])
+                            {
+                                console.log(i);
+                                screenArr[i].send(result[(i/2)]);
+                            }else
+                            console.log('第'+i+'屏未启动');
+                        }
+                    }else if(data[0].num==6){//6的策略 112222
+                        for(var i=1;i<11;i++)
+                        {
+                            if(i<=2)
+                            {
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[(i-1)]);
+                                }
+                                else
+                                    console.log('第'+i+'屏未启动');
+                            }else if(i<=4)
+                            {
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[2]);
+                                }
+                                else
+                                    console.log('第'+i+'屏未启动');
+                            }else if(i<=6)
+                            {
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[3]);
+                                }
+                                else
+                                    console.log('第'+i+'屏未启动');
+                            }else if(i<=8)
+                            {
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[4]);
+                                }
+                                else
+                                    console.log('第'+i+'屏未启动');
+                            }else{
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[5]);
+                                }
+                                else
+                                    console.log('第'+i+'屏未启动');
+                            }
+                        }
+                    }else if(data[0].num==7){//7的策略 1111222
+                        for(var i=1;i<11;i++)
+                        {
+                            if(i<=4)
+                            {
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[(i-1)]);
+                                }else
+                                    console.log('第'+i+'屏未启动');
+                            }else if(i<=6)
+                            {
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[4]);
+                                }else
+                                    console.log('第'+i+'屏未启动');
+                            }else if(i<=8)
+                            {
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[5]);
+                                }else
+                                    console.log('第'+i+'屏未启动');
+                            }else{
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[6]);
+                                }else
+                                    console.log('第'+i+'屏未启动');
+                            }
+                        }
+                    }else if(data[0].num==8){//8的策略 11111122
+                        for(var i=1;i<11;i++)
+                        {
+                            if(i<=6){
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[(i-1)]);
+                                }else
+                                    console.log('第'+i+'屏未启动');
+                            }else if(i<=8)
+                            {
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[6]);
+                                }else
+                                    console.log('第'+i+'屏未启动');
+                            }else{
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[7]);
+                                }else
+                                    console.log('第'+i+'屏未启动');
+                            }
+                        }
+                    }else if(data[0].num==9)//9的策略 111111112
+                    {
+                        for(var i=1;i<11;i++)
+                        {
+                            if(i<=8)
+                            {
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[(i-1)]);
+                                }else
+                                    console.log('第'+i+'屏未启动');
+                            }else{
+                                if(screenArr[i])
+                                {
+                                    console.log(i);
+                                    screenArr[i].send(result[8]);
+                                }else
+                                    console.log('第'+i+'屏未启动');
+                            }
+                        }
+                    }else if(data[0].num==10)//10的策略 1111111111
+                    {
+                        for(var i=1;i<11;i++)
+                        {
+                            if(screenArr[i])
+                            {
+                                console.log(i);
+                                screenArr[i].send(result[(i-1)]);
+                            }else
+                                console.log('第'+i+'屏未启动');
+                        }
+                    }
                 }
+                else{//大于10的策略
+//                    time = data[0].num/10;
+//                    residual = data[0].num%10;
+                    for(var i=0,j=1;i<data[0].num;i++,j++)
+                    {
+                        if(screenArr[j])
+                        {
+                            screenArr[j].send(result[i]);
+                        }
+                        else
+                            console.log('第'+i+'屏未启动');
+                        if(j==10){
+                            var beginTime = new Date().getTime();
+                            while(new Date().getTime()<beginTime+5000){
+                                //停止5秒
+                            };
+                            j=0;
+                        }
+                    }
+                }
+            });
 
     });
-
 });
 //目前能够找到对应的某个立功人员 策略还没有写完
 //测试是否连接上数据库

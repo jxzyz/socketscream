@@ -186,7 +186,6 @@ exports.FindPrize = function(year,item,callback){
         }
 };
 exports.FindPerson = function(year,item,detail,callback){
-
     var sql = "select person.id,person.name,person.gender,person.department,person.pic from person join per_pri on person.id = per_pri.id where per_pri.year='"+year+"' and per_pri.item='"+item+"'and per_pri.detail='"+detail+"';";
         connection.query(sql,function(err,result){
         if(!err){
@@ -214,5 +213,33 @@ exports.FindPerson = function(year,item,detail,callback){
                 msg:"出错"
             };
         }
-
+};
+exports.CountNum = function(year,item,detail,callback){
+    var sql = "select count(*) as num from person join per_pri on person.id = per_pri.id where per_pri.year='"+year+"' and per_pri.item='"+item+"'and per_pri.detail='"+detail+"';";
+    connection.query(sql,function(err,result){
+        if(!err){
+            var res = hasName(result);
+            callback(res);
+        }
+        else{
+            callback(error());
+        }
+    });
+        function hasName(result){
+            if(result.length==0){
+                return{
+                    err:1,
+                    msg:"内容不存在"
+                };
+            }
+            else{
+                return result;
+            }
+        }
+        function error(){
+            return{
+                err:1,
+                msg:"出错"
+            };
+        }
 };
